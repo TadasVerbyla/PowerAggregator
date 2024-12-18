@@ -11,7 +11,7 @@ namespace PowerAggregator.Controllers
     public class StatisticsController : ControllerBase
     {
         private IStatisticRepository statisticRepository;
-        private AggregationService aggregationService;
+        private IAggregationService aggregationService;
         public StatisticsController(PowerAggregationContext context)
         {
             statisticRepository = new StatisticRepository(context);
@@ -30,7 +30,7 @@ namespace PowerAggregator.Controllers
         [HttpPost]
         public IActionResult PostStatistcis(string url)
         {
-            if (aggregationService.ProcessStatisticUrl(url))
+            if (aggregationService.ProcessStatisticURL(url))
             {
                 return Ok(new { message = "CSV successfully aggregated. "});
             }

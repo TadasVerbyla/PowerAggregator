@@ -7,14 +7,14 @@ using System.Net;
 
 namespace PowerAggregator.Services
 {
-    public class AggregationService
+    public class AggregationService : IAggregationService
     {
         private IStatisticRepository statisticRepository;
         public AggregationService(IStatisticRepository statisticRepository)
         {
             this.statisticRepository = statisticRepository;
         }
-        public bool ProcessStatisticUrl(string url)
+        public bool ProcessStatisticURL(string url)
         {
             try
             {
