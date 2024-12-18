@@ -27,6 +27,17 @@ namespace PowerAggregator.DAL
         {
             return context.Statistics.Find(id);
         }
+        public IEnumerable<MonthlyRegionStatistic> GetStatisticsByRegion(string region)
+        {
+            return context.Statistics.ToList()
+                .Where(statistic => statistic.RegionName == region);
+        }
+
+        public IEnumerable<MonthlyRegionStatistic> GetStatisticsByDate(DateTime yearMonth)
+        {
+            return context.Statistics.ToList()
+                .Where(statistic => statistic.MonthDate == yearMonth);
+        }
 
         public IEnumerable<MonthlyRegionStatistic> GetStatistics()
         {

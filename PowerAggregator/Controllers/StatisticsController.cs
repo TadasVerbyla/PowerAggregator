@@ -26,6 +26,22 @@ namespace PowerAggregator.Controllers
             return statistics == null ? NotFound() : Ok(statistics);
         }
 
+        // Get: api/Statistics/5
+        [HttpGet("{region}")]
+        public IActionResult GetStatisticsByRegion(string region)
+        {
+            IEnumerable<MonthlyRegionStatistic> statistics = statisticRepository.GetStatisticsByRegion(region);
+            return statistics == null ? NotFound() : Ok(statistics);
+        }
+
+        // Get: api/Statistics/5
+        [HttpGet("{yearMonth:datetime}")]
+        public IActionResult GetStatisticsByDate(DateTime yearMonth)
+        {
+            IEnumerable<MonthlyRegionStatistic> statistics = statisticRepository.GetStatisticsByDate(yearMonth);
+            return statistics == null ? NotFound() : Ok(statistics);
+        }
+
         // POST: api/Statistics
         [HttpPost]
         public IActionResult PostStatistcis(string url)

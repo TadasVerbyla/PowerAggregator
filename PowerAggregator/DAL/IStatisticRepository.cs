@@ -6,6 +6,8 @@ namespace PowerAggregator.DAL
     {
         IEnumerable<MonthlyRegionStatistic> GetStatistics();
         MonthlyRegionStatistic GetStatisticById(int id);
+        IEnumerable<MonthlyRegionStatistic> GetStatisticsByRegion(string region);
+        IEnumerable<MonthlyRegionStatistic> GetStatisticsByDate(DateTime yearMonth);
         void InsertStatistic(MonthlyRegionStatistic statistic);
         void DeleteStatistic(int id);
         void UpdateStatistic(MonthlyRegionStatistic statistic);
