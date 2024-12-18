@@ -10,5 +10,13 @@ namespace PowerAggregator.Data
 
         }
         public DbSet<MonthlyRegionStatistic> Statistics { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<MonthlyRegionStatistic>()
+                .HasIndex(x => new { x.RegionName, x.MonthDate })
+                .IsUnique();
+        }
     }
 }

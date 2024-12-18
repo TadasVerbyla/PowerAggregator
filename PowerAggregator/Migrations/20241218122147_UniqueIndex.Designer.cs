@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PowerAggregator.Data;
 
@@ -11,9 +12,11 @@ using PowerAggregator.Data;
 namespace PowerAggregator.Migrations
 {
     [DbContext(typeof(PowerAggregationContext))]
-    partial class PowerAggregationContextModelSnapshot : ModelSnapshot
+    [Migration("20241218122147_UniqueIndex")]
+    partial class UniqueIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
