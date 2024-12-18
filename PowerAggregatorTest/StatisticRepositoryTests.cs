@@ -7,7 +7,7 @@ namespace PowerAggregatorTest
 {
     public class StatisticRepositoryTests
     {
-        private readonly PowerAggregationContext context;
+        private PowerAggregationContext context;
 
         public StatisticRepositoryTests()
         {
