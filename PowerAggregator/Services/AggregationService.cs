@@ -1,4 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using PowerAggregator.DAL;
+using PowerAggregator.Data;
 using PowerAggregator.Models;
 using System.Diagnostics;
 using System.Net;
@@ -7,12 +9,31 @@ namespace PowerAggregator.Services
 {
     public class AggregationService
     {
-        public void ProcessStatisticUrl(string url)
+        private IStatisticRepository statisticRepository;
+        public AggregationService(IStatisticRepository statisticRepository)
         {
-            string csv = DownloadCSV(url).Result;
-            var records = ParseCSV(csv);
-            var apartments = FilterByObjectName(records, "BUTAS");
-            var statistics = AggregateRegionStatistics(apartments);
+            this.statisticRepository = statisticRepository;
+        }
+        public bool ProcessStatisticUrl(string url)
+        {
+            try
+            {
+                string csv = DownloadCSV(url).Result;
+                var records = ParseCSV(csv);
+                var apartments = FilterByObjectName(records, "BUTAS");
+                var statistics = AggregateRegionStatistics(apartments);
+                foreach (var region in statistics)
+                {
+                    statisticRepository.InsertStatistic(region);
+                }
+                statisticRepository.Save();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
 
         private List<MonthlyRegionStatistic> AggregateRegionStatistics(List<PowerUsageRecord> apartmentRecords)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PowerAggregator.Data;
 using PowerAggregator.Models;
+using System.Diagnostics;
 
 namespace PowerAggregator.DAL
 {
@@ -34,6 +35,7 @@ namespace PowerAggregator.DAL
 
         public void InsertStatistic(MonthlyRegionStatistic statistic)
         {
+            Debug.WriteLine(statistic.RegionName);
             context.Statistics.Add(statistic);
         }
 

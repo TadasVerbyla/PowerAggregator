@@ -30,8 +30,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-var aggregationService = new AggregationService();
-aggregationService.ProcessStatisticUrl("https://data.gov.lt/media/filer_public/b2/3d/b23d5d9d-7f07-49a5-9ad8-8ec8917cdf82/2024-10.csv");
-aggregationService.ProcessStatisticUrl("https://data.gov.lt/media/filer_public/be/39/be390ff0-8972-474e-a044-9f6f6f5f589a/2024-09.csv");
-
 app.Run();
