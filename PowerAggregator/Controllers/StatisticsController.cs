@@ -12,10 +12,13 @@ namespace PowerAggregator.Controllers
     {
         private IStatisticRepository statisticRepository;
         private IAggregationService aggregationService;
-        public StatisticsController(PowerAggregationContext context)
+        private ILogger<StatisticsController> logger;
+
+        public StatisticsController(PowerAggregationContext context, ILogger<StatisticsController> logger)
         {
             statisticRepository = new StatisticRepository(context);
             aggregationService = new AggregationService(statisticRepository);
+            this.logger = logger;
         }
 
         // GET: api/Statistics
@@ -23,6 +26,7 @@ namespace PowerAggregator.Controllers
         public IActionResult GetStatistics()
         {
             IEnumerable<MonthlyRegionStatistic> statistics = statisticRepository.GetStatistics();
+            logger.LogInformation($"All statistics requested at: {DateTime.Now}");
             return statistics == null ? NotFound() : Ok(statistics);
         }
 
@@ -31,6 +35,7 @@ namespace PowerAggregator.Controllers
         public IActionResult GetStatisticsByRegion(string region)
         {
             IEnumerable<MonthlyRegionStatistic> statistics = statisticRepository.GetStatisticsByRegion(region);
+            logger.LogInformation($"Statistics for {region} region requested at: {DateTime.Now}");
             return statistics == null ? NotFound() : Ok(statistics);
         }
 
@@ -39,6 +44,7 @@ namespace PowerAggregator.Controllers
         public IActionResult GetStatisticsByDate(DateTime yearMonth)
         {
             IEnumerable<MonthlyRegionStatistic> statistics = statisticRepository.GetStatisticsByDate(yearMonth);
+            logger.LogInformation($"Statistics for the month of {yearMonth} requested at: {DateTime.Now}");
             return statistics == null ? NotFound() : Ok(statistics);
         }
 
@@ -48,10 +54,12 @@ namespace PowerAggregator.Controllers
         {
             if (aggregationService.ProcessStatisticURL(url))
             {
+                logger.LogInformation($"AggregationService successfully aggregated {url} statistics at {DateTime.Now}");
                 return Ok(new { message = "CSV successfully aggregated. "});
             }
             else
             {
+                logger.LogError($"AggregationService failed to aggregate {url} statistics at {DateTime.Now}");
                 return StatusCode(500, new { message = "Failed to aggregate CSV. " });
             }
         }
@@ -62,6 +70,7 @@ namespace PowerAggregator.Controllers
         {
             statisticRepository.DeleteAllStatistics();
             statisticRepository.Save();
+            logger.LogCritical($"All statistics were deleted at {DateTime.Now}");
             return Ok();
         }
     }
