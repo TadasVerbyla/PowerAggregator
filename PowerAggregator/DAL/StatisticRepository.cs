@@ -23,6 +23,11 @@ namespace PowerAggregator.DAL
             }
         }
 
+        public void DeleteAllStatistics()
+        {
+            context.Statistics.RemoveRange(GetStatistics());
+        }
+
         public MonthlyRegionStatistic GetStatisticById(int id)
         {
             return context.Statistics.Find(id);
@@ -46,7 +51,6 @@ namespace PowerAggregator.DAL
 
         public void InsertStatistic(MonthlyRegionStatistic statistic)
         {
-            Debug.WriteLine(statistic.RegionName);
             context.Statistics.Add(statistic);
         }
 

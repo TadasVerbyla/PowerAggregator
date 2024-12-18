@@ -55,5 +55,14 @@ namespace PowerAggregator.Controllers
                 return StatusCode(500, new { message = "Failed to aggregate CSV. " });
             }
         }
+
+        // DELETE: api/Statistics
+        [HttpDelete]
+        public IActionResult DeleteAllStatistcis()
+        {
+            statisticRepository.DeleteAllStatistics();
+            statisticRepository.Save();
+            return Ok();
+        }
     }
 }

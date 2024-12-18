@@ -10,6 +10,7 @@ namespace PowerAggregator.DAL
         IEnumerable<MonthlyRegionStatistic> GetStatisticsByDate(DateTime yearMonth);
         void InsertStatistic(MonthlyRegionStatistic statistic);
         void DeleteStatistic(int id);
+        void DeleteAllStatistics();
         void UpdateStatistic(MonthlyRegionStatistic statistic);
         void Save();
     }
