@@ -1,0 +1,6 @@
+@PowerAggregator_HostAddress = http://localhost:5042
+
+GET {{PowerAggregator_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
