@@ -13,25 +13,16 @@ namespace PowerAggregator.DAL
         {
             this.context = context;
         }
-
-        public void DeleteStatistic(int id)
+        public void InsertStatistic(MonthlyRegionStatistic statistic)
         {
-            MonthlyRegionStatistic? statistic = context.Statistics.Find(id);
-            if (statistic != null)
-            {
-                context.Statistics.Remove(statistic);
-            }
+            context.Statistics.Add(statistic);
         }
 
-        public void DeleteAllStatistics()
+        public IEnumerable<MonthlyRegionStatistic> GetStatistics()
         {
-            context.Statistics.RemoveRange(GetStatistics());
+            return context.Statistics.ToList();
         }
 
-        public MonthlyRegionStatistic GetStatisticById(int id)
-        {
-            return context.Statistics.Find(id);
-        }
         public IEnumerable<MonthlyRegionStatistic> GetStatisticsByRegion(string region)
         {
             return context.Statistics.ToList()
@@ -43,34 +34,41 @@ namespace PowerAggregator.DAL
             return context.Statistics.ToList()
                 .Where(statistic => statistic.MonthDate == yearMonth);
         }
-
-        public IEnumerable<MonthlyRegionStatistic> GetStatistics()
+        public void DeleteAllStatistics()
         {
-            return context.Statistics.ToList();
+            context.Statistics.RemoveRange(GetStatistics());
         }
-
-        public void InsertStatistic(MonthlyRegionStatistic statistic)
-        {
-            context.Statistics.Add(statistic);
-        }
-
         public void Save()
         {
             context.SaveChanges();
         }
 
-        public void UpdateStatistic(MonthlyRegionStatistic newStatistic)
-        {
-            MonthlyRegionStatistic? statistic = context.Statistics.Find(newStatistic.Id);
-            if (statistic != null)
-            {
-                statistic.RegionName = newStatistic.RegionName;
-                statistic.ProducedPower = newStatistic.ProducedPower;
-                statistic.ConsumedPower = newStatistic.ConsumedPower;
-                statistic.MonthDate = newStatistic.MonthDate;
-                context.Entry(statistic).State = EntityState.Modified;
-            }
-        }
+        //public void DeleteStatistic(int id)
+        //{
+        //    MonthlyRegionStatistic? statistic = context.Statistics.Find(id);
+        //    if (statistic != null)
+        //    {
+        //        context.Statistics.Remove(statistic);
+        //    }
+        //}
+
+        //public MonthlyRegionStatistic GetStatisticById(int id)
+        //{
+        //    return context.Statistics.Find(id);
+        //}
+
+        //public void UpdateStatistic(MonthlyRegionStatistic newStatistic)
+        //{
+        //    MonthlyRegionStatistic? statistic = context.Statistics.Find(newStatistic.Id);
+        //    if (statistic != null)
+        //    {
+        //        statistic.RegionName = newStatistic.RegionName;
+        //        statistic.ProducedPower = newStatistic.ProducedPower;
+        //        statistic.ConsumedPower = newStatistic.ConsumedPower;
+        //        statistic.MonthDate = newStatistic.MonthDate;
+        //        context.Entry(statistic).State = EntityState.Modified;
+        //    }
+        //}
 
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
